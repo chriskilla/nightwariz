@@ -149,8 +149,8 @@
             <h1 id="welcome-message">Bienvenue !</h1>
             <p id="about-text">Retrouvez ses vidéos récentes et sa chaîne YouTube.</p>
             <a href="https://chriskilla.github.io/Page/" class="button" target="_blank" rel="noopener noreferrer" id="learn-more">En savoir plus</a>
-            <button class="button" onclick="customizeColors()" id="customize-button">Personnaliser</button>
-            
+            <button class="button" onclick="showCustomizeColors()" id="customize-button">Personnaliser</button>
+
             <!-- Liens Vidéos -->
             <div class="box">
                 <h2 id="recent-videos">Vidéos Récentes</h2>
@@ -177,119 +177,47 @@
             <label for="secondary-color-picker" id="secondary-color-label">Couleur secondaire :</label>
             <input type="color" id="secondary-color-picker" name="secondary-color" value="#a970ff">
             <button class="button" onclick="applyColors()" id="apply-button">Appliquer</button>
+            <button class="button" onclick="hideCustomizeColors()" id="back-button">Retour</button>
         </section>
     </div>
 
     <script>
-        // Traductions pour chaque langue
-        const translations = {
-            fr: {
-                login: "Connexion",
-                usernameLabel: "Nom d'utilisateur :",
-                welcome: "Bienvenue !",
-                aboutText: "Retrouvez ses vidéos récentes et sa chaîne YouTube.",
-                learnMore: "En savoir plus",
-                customize: "Personnaliser",
-                videos: "Vidéos Récentes",
-                logout: "Déconnexion",
-                montageLink: "Montage Rocket League",
-                resetLink: "Reset Musty en 1V1",
-                channelLink: "Chaîne YouTube",
-                qrText: "QR Code",
-                customizeColors: "Personnaliser les couleurs",
-                primaryColor: "Couleur principale :",
-                secondaryColor: "Couleur secondaire :",
-                apply: "Appliquer",
-                languageSection: "Sélection de langue",
-                languageButton: "Langues"
-            },
-            en: {
-                login: "Login",
-                usernameLabel: "Username:",
-                welcome: "Welcome!",
-                aboutText: "Check out recent videos and the YouTube channel.",
-                learnMore: "Learn more",
-                customize: "Customize",
-                videos: "Recent Videos",
-                logout: "Logout",
-                montageLink: "Rocket League Montage",
-                resetLink: "Musty Reset in 1v1",
-                channelLink: "YouTube Channel",
-                qrText: "QR Code",
-                customizeColors: "Customize Colors",
-                primaryColor: "Primary Color:",
-                secondaryColor: "Secondary Color:",
-                apply: "Apply",
-                languageSection: "Language Selection",
-                languageButton: "Languages"
-            },
-            es: {
-                login: "Conexión",
-                usernameLabel: "Nombre de usuario:",
-                welcome: "¡Bienvenido!",
-                aboutText: "Consulta los videos recientes y el canal de YouTube.",
-                learnMore: "Saber más",
-                customize: "Personalizar",
-                videos: "Videos recientes",
-                logout: "Cerrar sesión",
-                montageLink: "Montaje de Rocket League",
-                resetLink: "Reset Musty en 1V1",
-                channelLink: "Canal de YouTube",
-                qrText: "Código QR",
-                customizeColors: "Personalizar colores",
-                primaryColor: "Color principal:",
-                secondaryColor: "Color secundario:",
-                apply: "Aplicar",
-                languageSection: "Selección de idioma",
-                languageButton: "Idiomas"
-            },
-            de: {
-                login: "Anmeldung",
-                usernameLabel: "Benutzername:",
-                welcome: "Willkommen!",
-                aboutText: "Schau dir die neuesten Videos und den YouTube-Kanal an.",
-                learnMore: "Mehr erfahren",
-                customize: "Anpassen",
-                videos: "Neueste Videos",
-                logout: "Abmelden",
-                montageLink: "Rocket League Montage",
-                resetLink: "Musty Reset in 1v1",
-                channelLink: "YouTube Kanal",
-                qrText: "QR Code",
-                customizeColors: "Farben anpassen",
-                primaryColor: "Hauptfarbe:",
-                secondaryColor: "Sekundärfarbe:",
-                apply: "Anwenden",
-                languageSection: "Sprache Auswahl",
-                languageButton: "Sprachen"
-            }
-        };
-
-        function changeLanguage() {
-            const language = document.getElementById('language-select').value;
-            const translation = translations[language];
-
-            // Mise à jour dynamique du texte
-            document.getElementById('language-section-title').textContent = translation.languageSection;
-            document.getElementById('language-button').textContent = translation.languageButton;
-
-            document.getElementById('login-title').textContent = translation.login;
-            document.getElementById('login-description').textContent = translation.usernameLabel;
-            document.getElementById('welcome-message').textContent = translation.welcome;
-            document.getElementById('about-text').textContent = translation.aboutText;
-            document.getElementById('learn-more').textContent = translation.learnMore;
-            document.getElementById('customize-button').textContent = translation.customize;
-            document.getElementById('recent-videos').textContent = translation.videos;
-            document.getElementById('montage-link').textContent = translation.montageLink;
-            document.getElementById('reset-link').textContent = translation.resetLink;
-            document.getElementById('channel-link').textContent = translation.channelLink;
-            document.getElementById('qr-code-title').textContent = translation.qrText;
-            document.getElementById('logout-button').textContent = translation.logout;
-            document.getElementById('customize-title').textContent = translation.customizeColors;
-            document.getElementById('primary-color-label').textContent = translation.primaryColor;
-            document.getElementById('secondary-color-label').textContent = translation.secondaryColor;
-            document.getElementById('apply-button').textContent = translation.apply;
+        // Fonction pour afficher la section de personnalisation des couleurs
+        function showCustomizeColors() {
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('customize-section').style.display = 'block';
         }
+
+        // Fonction pour revenir à l'écran d'accueil
+        function hideCustomizeColors() {
+            document.getElementById('customize-section').style.display = 'none';
+            document.getElementById('welcome-section').style.display = 'block';
+        }
+
+        // Appliquer les couleurs choisies par l'utilisateur
+        function applyColors() {
+            const primaryColor = document.getElementById('primary-color-picker').value;
+            const secondaryColor = document.getElementById('secondary-color-picker').value;
+
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+        }
+
+        // Déconnexion
+        function logout() {
+            localStorage.removeItem('username');
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+        }
+
+        // Initialisation de l'événement DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('login-button').addEventListener('click', login);
+            document.getElementById('language-select').addEventListener('change', changeLanguage);
+            if (localStorage.getItem('username')) {
+                showWelcomeSection();
+            }
+        });
 
         // Fonction de connexion
         function login() {
@@ -311,27 +239,119 @@
         function showWelcomeSection() {
             const username = localStorage.getItem('username');
             if (username) {
-                document.getElementById('welcome-message').textContent = `Bienvenue ${username} sur nightwariz !`;
+                document.getElementById('welcome-message').textContent = `Bienvenue ${username} sur Nightwariz !`;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('welcome-section').style.display = 'block';
             }
         }
 
-        // Déconnexion
-        function logout() {
-            localStorage.removeItem('username');
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('login-section').style.display = 'block';
-        }
+        // Changer la langue
+        function changeLanguage() {
+            const language = document.getElementById('language-select').value;
+            const translations = {
+                fr: {
+                    login: "Connexion",
+                    usernameLabel: "Nom d'utilisateur :",
+                    welcome: "Bienvenue !",
+                    aboutText: "Retrouvez ses vidéos récentes et sa chaîne YouTube.",
+                    learnMore: "En savoir plus",
+                    customize: "Personnaliser",
+                    videos: "Vidéos Récentes",
+                    logout: "Déconnexion",
+                    montageLink: "Montage Rocket League",
+                    resetLink: "Reset Musty en 1V1",
+                    channelLink: "Chaîne YouTube",
+                    qrText: "QR Code",
+                    customizeColors: "Personnaliser les couleurs",
+                    primaryColor: "Couleur principale :",
+                    secondaryColor: "Couleur secondaire :",
+                    apply: "Appliquer",
+                    languageSection: "Sélection de langue",
+                    languageButton: "Langues"
+                },
+                en: {
+                    login: "Login",
+                    usernameLabel: "Username:",
+                    welcome: "Welcome!",
+                    aboutText: "Check out recent videos and the YouTube channel.",
+                    learnMore: "Learn more",
+                    customize: "Customize",
+                    videos: "Recent Videos",
+                    logout: "Logout",
+                    montageLink: "Rocket League Montage",
+                    resetLink: "Musty Reset in 1v1",
+                    channelLink: "YouTube Channel",
+                    qrText: "QR Code",
+                    customizeColors: "Customize Colors",
+                    primaryColor: "Primary Color:",
+                    secondaryColor: "Secondary Color:",
+                    apply: "Apply",
+                    languageSection: "Language Selection",
+                    languageButton: "Languages"
+                },
+                es: {
+                    login: "Conexión",
+                    usernameLabel: "Nombre de usuario:",
+                    welcome: "¡Bienvenido!",
+                    aboutText: "Consulta los videos recientes y el canal de YouTube.",
+                    learnMore: "Saber más",
+                    customize: "Personalizar",
+                    videos: "Videos recientes",
+                    logout: "Cerrar sesión",
+                    montageLink: "Montaje de Rocket League",
+                    resetLink: "Reset Musty en 1V1",
+                    channelLink: "Canal de YouTube",
+                    qrText: "Código QR",
+                    customizeColors: "Personalizar colores",
+                    primaryColor: "Color principal:",
+                    secondaryColor: "Color secundario:",
+                    apply: "Aplicar",
+                    languageSection: "Selección de idioma",
+                    languageButton: "Idiomas"
+                },
+                de: {
+                    login: "Anmeldung",
+                    usernameLabel: "Benutzername:",
+                    welcome: "Willkommen!",
+                    aboutText: "Schau dir die neuesten Videos und den YouTube-Kanal an.",
+                    learnMore: "Mehr erfahren",
+                    customize: "Anpassen",
+                    videos: "Neueste Videos",
+                    logout: "Abmelden",
+                    montageLink: "Rocket League Montage",
+                    resetLink: "Musty Reset in 1v1",
+                    channelLink: "YouTube Kanal",
+                    qrText: "QR Code",
+                    customizeColors: "Farben anpassen",
+                    primaryColor: "Hauptfarbe:",
+                    secondaryColor: "Sekundärfarbe:",
+                    apply: "Anwenden",
+                    languageSection: "Sprache Auswahl",
+                    languageButton: "Sprachen"
+                }
+            };
 
-        // Initialisation de l'événement DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('login-button').addEventListener('click', login);
-            document.getElementById('language-select').addEventListener('change', changeLanguage); // Assurez-vous que la fonction changeLanguage() est appelée
-            if (localStorage.getItem('username')) {
-                showWelcomeSection();
-            }
-        });
+            const translation = translations[language];
+
+            document.getElementById('login-title').textContent = translation.login;
+            document.getElementById('username-label').textContent = translation.usernameLabel;
+            document.getElementById('welcome-message').textContent = translation.welcome;
+            document.getElementById('about-text').textContent = translation.aboutText;
+            document.getElementById('learn-more').textContent = translation.learnMore;
+            document.getElementById('customize-button').textContent = translation.customize;
+            document.getElementById('recent-videos').textContent = translation.videos;
+            document.getElementById('montage-link').textContent = translation.montageLink;
+            document.getElementById('reset-link').textContent = translation.resetLink;
+            document.getElementById('channel-link').textContent = translation.channelLink;
+            document.getElementById('qr-code-title').textContent = translation.qrText;
+            document.getElementById('logout-button').textContent = translation.logout;
+            document.getElementById('customize-section-title').textContent = translation.customizeColors;
+            document.getElementById('primary-color-label').textContent = translation.primaryColor;
+            document.getElementById('secondary-color-label').textContent = translation.secondaryColor;
+            document.getElementById('apply-button').textContent = translation.apply;
+            document.getElementById('language-section-title').textContent = translation.languageSection;
+            document.getElementById('language-button').textContent = translation.languageButton;
+        }
     </script>
 </body>
 </html>
